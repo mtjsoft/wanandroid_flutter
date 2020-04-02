@@ -5,6 +5,7 @@ import 'package:firstflutterapp/diohttp/NWMethod.dart';
 import 'package:firstflutterapp/entity/user_info_entity.dart';
 import 'package:firstflutterapp/utils/FluttertoastUtils.dart';
 import 'package:firstflutterapp/utils/PrintUtils.dart';
+import 'package:firstflutterapp/utils/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sprintf/sprintf.dart';
@@ -133,6 +134,7 @@ class Login extends StatelessWidget {
           params: {"username": account, "password": password},
           success: (data) {
             // 保存用户昵称及ID、collectIds[]
+            SharedPreferencesUtils.saveUserInfo(data);
             Navigator.of(context).pop();
           }, error: (error) {
         FluttertoastUtils.showToast(error.errorMsg);

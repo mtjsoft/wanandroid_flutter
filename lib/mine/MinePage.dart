@@ -1,7 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firstflutterapp/config/GlobalConfig.dart';
 import 'package:firstflutterapp/config/routes_name_config.dart';
-import 'package:firstflutterapp/utils/FluttertoastUtils.dart';
+import 'package:firstflutterapp/entity/user_info_entity.dart';
 import 'package:firstflutterapp/utils/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
@@ -23,9 +22,6 @@ class _MinePageState extends State<MinePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    SharedPreferencesUtils.setUserName(username);
-
-    FluttertoastUtils.showToast(SharedPreferencesUtils.getUserName());
   }
 
   @override
@@ -90,7 +86,10 @@ class _MinePageState extends State<MinePage> {
                     padding: EdgeInsets.only(top: 10),
                     child: GestureDetector(
                       onTap: (){
-                        Navigator.pushNamed(context, RoutersNameConfig.login_page);
+                        SharedPreferencesUtils.getUserInfo().then((user){
+                          print(user.toJson());
+                        });
+//                        Navigator.pushNamed(context, RoutersNameConfig.login_page);
                       },
                       child: Text(
                         "点击登录",
