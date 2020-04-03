@@ -11,6 +11,8 @@ import 'package:firstflutterapp/generated/json/base/json_convert_content.dart';
 import 'package:firstflutterapp/home/HomePage.dart';
 import 'package:firstflutterapp/login/Login.dart';
 import 'package:firstflutterapp/mine/MinePage.dart';
+import 'package:firstflutterapp/mine/mine_collect.dart';
+import 'package:firstflutterapp/preject/preject_list.dart';
 import 'package:firstflutterapp/search/HotSearchPage.dart';
 import 'package:firstflutterapp/search/search_result.dart';
 import 'package:firstflutterapp/tree/tree_list.dart';
@@ -39,6 +41,8 @@ class MyApp extends StatelessWidget {
           index: jsonDecode(ModalRoute.of(context).settings.arguments)["index"],
           title: jsonDecode(ModalRoute.of(context).settings.arguments)["title"],
         ),
+    RoutersNameConfig.collectListPage: (context) => MineCollectPage(),
+    RoutersNameConfig.projectListPage: (context) => PrejectListPage(),
   };
 
   @override

@@ -8,21 +8,15 @@ import 'package:firstflutterapp/view/list_refresh_loadmore.dart';
 import 'package:flutter/material.dart';
 import 'package:sprintf/sprintf.dart';
 
-// 某个公众号历史数据
-class ChaptersListPage extends StatefulWidget {
-  int id = 408;
-  String title = "鸿洋";
-
-  ChaptersListPage(String this.title, int this.id);
-
+// 项目列表
+class PrejectListPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return new _ChaptersListPageState();
+    return new _PrejectListPageState();
   }
 }
 
-class _ChaptersListPageState extends State<ChaptersListPage> {
+class _PrejectListPageState extends State<PrejectListPage> {
   int total = 0;
   int pageNum = 1;
   List<ArticleListData> articleList = new List();
@@ -38,7 +32,7 @@ class _ChaptersListPageState extends State<ChaptersListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text("最新项目"),
       ),
       body: new ListPage(articleList, _renderRow,
           isLoadMore: true,
@@ -50,12 +44,12 @@ class _ChaptersListPageState extends State<ChaptersListPage> {
   }
 
   Widget _renderRow(BuildContext context, int index) {
-    return ListItem.init().renderRow(context, index, articleList, 0,
-            (data, position) {
-          setState(() {
-            articleList[position] = data;
-          });
-        });
+    return ListItem.init().renderProjectRow(context, index, articleList, 1,
+        (data, position) {
+      setState(() {
+        articleList[position] = data;
+      });
+    });
   }
 
   // 下拉刷新
@@ -66,8 +60,8 @@ class _ChaptersListPageState extends State<ChaptersListPage> {
 
   // 搜索列表
   void getList() {
-    DioManager().request<ArticleListEntity>(NWMethod.GET,
-        sprintf(ApiUrl.init().wxarticleList, [widget.id, pageNum]), params: {},
+    DioManager().request<ArticleListEntity>(
+        NWMethod.GET, sprintf(ApiUrl.init().projectList, [pageNum]), params: {},
         success: (data) {
       setState(() {
         total = data.total;

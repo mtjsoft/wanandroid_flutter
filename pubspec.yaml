@@ -26,6 +26,7 @@ dependencies:
   # 网络请求dio
   dio: ^3.0.9
   dio_cookie_manager: ^1.0.0
+  path_provider: ^1.6.5
   # toast
   fluttertoast: ^4.0.1
   # 轮播图

@@ -15,7 +15,6 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:sprintf/sprintf.dart';
 
 class HomePage extends StatefulWidget {
-
   @override
   _HomePageState createState() {
     // TODO: implement createState
@@ -40,7 +39,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text('首页'),
@@ -58,7 +56,12 @@ class _HomePageState extends State<HomePage> {
 
   // item布局
   Widget _renderRow(BuildContext context, int index) {
-    return ListItem.init().renderRow(context, index,articleList);
+    return ListItem.init().renderRow(context, index, articleList, 0,
+        (data, position) {
+      setState(() {
+        articleList[position] = data;
+      });
+    });
   }
 
   // 添加头部banner

@@ -1,5 +1,6 @@
 import 'package:firstflutterapp/config/ApiUrl.dart';
 import 'package:firstflutterapp/config/GlobalConfig.dart';
+import 'package:firstflutterapp/config/routes_name_config.dart';
 import 'package:firstflutterapp/diohttp/DioManager.dart';
 import 'package:firstflutterapp/diohttp/NWMethod.dart';
 import 'package:firstflutterapp/entity/user_info_entity.dart';
@@ -18,16 +19,21 @@ class Login extends StatelessWidget {
   String account = "";
   String password = "";
 
+  bool register = false;
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
 
     //获取路由参数
     var args = ModalRoute.of(context).settings.arguments;
+    if (args != null) {
+      register = true;
+    }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('玩android登录'),
+        title: Text('玩android${register ? "注册" : "登录"}'),
       ),
       body: Container(
         width: double.infinity,
@@ -105,7 +111,7 @@ class Login extends StatelessWidget {
                   child: RaisedButton(
                     color: GlobalConfig.themeColor,
                     child: Text(
-                      "登录",
+                      "${register ? "注册" : "登录"}",
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () {
@@ -113,7 +119,24 @@ class Login extends StatelessWidget {
                     },
                   ),
                 ),
-              )
+              ),
+              Visibility(
+                visible: !register,
+                child: GestureDetector(
+                  onTap: () {
+                    // 跳注册
+                    Navigator.pushNamed(context, RoutersNameConfig.login_page,arguments: true);
+                  },
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.fromLTRB(24, 10, 24, 10),
+                    child: Text(
+                      "注册新账号",
+                      style: TextStyle(color: GlobalConfig.themeColor),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -130,15 +153,34 @@ class Login extends StatelessWidget {
     } else {
       focusNode1.unfocus();
       focusNode2.unfocus();
-      DioManager().request<UserInfoEntity>(NWMethod.POST, ApiUrl.init().login,
-          params: {"username": account, "password": password},
-          success: (data) {
-            // 保存用户昵称及ID、collectIds[]
-            SharedPreferencesUtils.saveUserInfo(data);
-            Navigator.of(context).pop();
-          }, error: (error) {
-        FluttertoastUtils.showToast(error.errorMsg);
-      });
+      if (register) {
+        // 注册
+        DioManager().request<UserInfoEntity>(
+            NWMethod.POST, ApiUrl.init().register, params: {
+          "username": account,
+          "password": password,
+          "repassword": password
+        }, success: (data) {
+          // 注册成功，返回登录
+          FluttertoastUtils.showToast("注册成功！请登录");
+          Navigator.of(context).pop();
+        }, error: (error) {
+          FluttertoastUtils.showToast(error.errorMsg);
+        });
+      } else {
+        DioManager().request<UserInfoEntity>(NWMethod.POST, ApiUrl.init().login,
+            params: {"username": account, "password": password},
+            success: (data) {
+          // 保存用户昵称及ID、collectIds[]
+          FluttertoastUtils.showToast("登录成功！");
+          UserInfoEntity userInfoEntity = data;
+          userInfoEntity.password = password;
+          SharedPreferencesUtils.saveUserInfo(userInfoEntity);
+          Navigator.of(context).pop(userInfoEntity);
+        }, error: (error) {
+          FluttertoastUtils.showToast(error.errorMsg);
+        });
+      }
     }
   }
 }

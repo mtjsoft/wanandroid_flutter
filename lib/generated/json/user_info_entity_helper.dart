@@ -47,6 +47,9 @@ userInfoEntityFromJson(UserInfoEntity data, Map<String, dynamic> json) {
 	if (json['userId'] != null) {
 		data.userId = json['userId']?.toInt();
 	}
+	if (json['level'] != null) {
+		data.level = json['level']?.toInt();
+	}
 	return data;
 }
 
@@ -69,5 +72,6 @@ Map<String, dynamic> userInfoEntityToJson(UserInfoEntity entity) {
 	data['coinCount'] = entity.coinCount;
 	data['rank'] = entity.rank;
 	data['userId'] = entity.userId;
+	data['level'] = entity.level;
 	return data;
 }

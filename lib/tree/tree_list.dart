@@ -111,7 +111,12 @@ class TreeState extends State<Tree> {
   }
 
   Widget _renderRow(BuildContext context, int index) {
-    return ListItem.init().renderRow(context, index, articleList);
+    return ListItem.init().renderRow(context, index, articleList, 0,
+            (data, position) {
+          setState(() {
+            articleList[position] = data;
+          });
+        });
   }
 
   // 下拉刷新

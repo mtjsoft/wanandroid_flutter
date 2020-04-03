@@ -9,6 +9,7 @@ import 'package:firstflutterapp/diohttp/BaseEntity.dart';
 import 'package:firstflutterapp/diohttp/BaseListEntity.dart';
 import 'package:firstflutterapp/diohttp/ErrorEntity.dart';
 import 'package:firstflutterapp/diohttp/NWMethod.dart';
+import 'package:path_provider/path_provider.dart';
 
 class DioManager {
   static final DioManager _shared = DioManager._internal();
@@ -16,6 +17,7 @@ class DioManager {
   factory DioManager() => _shared;
 
   Dio dio;
+  PersistCookieJar cookieJar;
 
   DioManager._internal() {
     if (dio == null) {
@@ -33,9 +35,19 @@ class DioManager {
       dio = Dio(options);
       dio.interceptors
           .add(LogInterceptor(responseBody: GlobalConfig.isDebug)); //是否开启请求日志
-      var cookieJar = CookieJar();
-      dio.interceptors.add(CookieManager(cookieJar));
+      getCookieJar().then((cj) {
+        dio.interceptors.add(CookieManager(cj));
+      });
     }
+  }
+
+  Future<PersistCookieJar> getCookieJar() async {
+    if (cookieJar == null) {
+      Directory appDocDir = await getApplicationDocumentsDirectory();
+      String appDocPath = appDocDir.path;
+      cookieJar = new PersistCookieJar(dir: appDocPath);
+    }
+    return cookieJar;
   }
 
   // 请求，返回参数为 T

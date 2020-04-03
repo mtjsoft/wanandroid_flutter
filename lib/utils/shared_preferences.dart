@@ -45,6 +45,13 @@ class SharedPreferencesUtils {
     });
   }
 
+  // 移除
+  static remove(String key) {
+    getSharedPreferences().then((prefs) {
+      prefs.remove(key);
+    });
+  }
+
   /*登录用户数据缓存*/
   static saveUserInfo(UserInfoEntity user) {
     getSharedPreferences().then((prefs) {
@@ -59,5 +66,12 @@ class SharedPreferencesUtils {
     UserInfoEntity userInfoEntity = JsonConvert.fromJsonAsT<UserInfoEntity>(
         jsonDecode(prefs.getString('user_info')));
     return userInfoEntity;
+  }
+
+  /*移除登录用户数据缓存*/
+  static removeUserInfo() {
+    getSharedPreferences().then((prefs) {
+      prefs.remove('user_info');
+    });
   }
 }
