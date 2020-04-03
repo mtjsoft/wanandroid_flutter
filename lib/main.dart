@@ -56,19 +56,12 @@ class MyApp extends StatelessWidget {
         routes: _routes,
         initialRoute: "/",
         //错误路由处理，返回UnknownPage
-        onUnknownRoute: (RouteSettings setting) => MaterialPageRoute(
-            builder: this._routes[RoutersNameConfig.unknown_page]),
-        onGenerateRoute: (RouteSettings settings) {
-          String routeName = settings.name;
-          print("路由名：$routeName");
-          // 包含验证登录
-          if (routeName.indexOf("/sign") != -1) {
-            return MaterialPageRoute(
-                builder: this._routes[RoutersNameConfig.login_page]);
-          } else {
-            return MaterialPageRoute(builder: this._routes[routeName]);
-          }
-        });
+//        onUnknownRoute: (RouteSettings setting) => MaterialPageRoute(
+//            builder: this._routes[RoutersNameConfig.unknown_page]),
+//        onGenerateRoute: (RouteSettings settings) {
+//          String routeName = settings.name;
+//        }
+        );
   }
 }
 

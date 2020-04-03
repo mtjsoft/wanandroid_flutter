@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firstflutterapp/config/ApiUrl.dart';
 import 'package:firstflutterapp/config/GlobalConfig.dart';
 import 'package:firstflutterapp/config/routes_name_config.dart';
@@ -45,7 +46,7 @@ class _MinePageState extends State<MinePage> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: new NetworkImage(
+                image: NetworkImage(
                     "https://www.mtjsoft.cn/media/wanandroid/userbg.jpg"),
                 fit: BoxFit.cover,
               ),
