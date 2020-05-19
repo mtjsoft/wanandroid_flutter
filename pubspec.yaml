@@ -32,13 +32,13 @@ dependencies:
   # 轮播图
   flutter_swiper: ^1.1.6
   # 缓存网络图片
-  cached_network_image: ^2.0.0
+  cached_network_image: ^2.2.0+1
   # 字符串格式化
   sprintf: ^4.0.2
   # webView
-  webview_flutter: ^0.3.19+9
+  webview_flutter: ^0.3.21
   #
-  shared_preferences: ^0.5.6+3
+  shared_preferences: ^0.5.7+2
 
 dev_dependencies:
   flutter_test:

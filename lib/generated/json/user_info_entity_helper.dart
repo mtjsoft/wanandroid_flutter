@@ -42,7 +42,7 @@ userInfoEntityFromJson(UserInfoEntity data, Map<String, dynamic> json) {
 		data.coinCount = json['coinCount']?.toInt();
 	}
 	if (json['rank'] != null) {
-		data.rank = json['rank']?.toInt();
+		data.rank = json['rank']?.toString();
 	}
 	if (json['userId'] != null) {
 		data.userId = json['userId']?.toInt();

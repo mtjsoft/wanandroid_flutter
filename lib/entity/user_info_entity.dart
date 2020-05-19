@@ -14,7 +14,7 @@ class UserInfoEntity with JsonConvert<UserInfoEntity> {
 	int type;
 	String username;
 	int coinCount;
-	int rank;
+	String rank;
 	int userId;
 	int level;
 }

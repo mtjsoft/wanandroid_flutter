@@ -29,10 +29,14 @@ class _HomePageState extends State<HomePage> {
   int total = 0;
   List<ArticleListData> articleList = new List();
 
+  SwiperController _swiperController;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _swiperController = SwiperController();
+    _swiperController.startAutoplay();
     getBannerData();
     getArticleList();
   }
@@ -76,7 +80,8 @@ class _HomePageState extends State<HomePage> {
                   "title": bannerList[index].title
                 }));
           },
-          autoplay: true,
+          autoplay: false,
+          loop: false,
           outer: false,
           itemBuilder: (c, i) {
             return new CachedNetworkImage(
@@ -93,6 +98,7 @@ class _HomePageState extends State<HomePage> {
           },
           pagination: new SwiperPagination(margin: new EdgeInsets.all(5.0)),
           itemCount: bannerList == null ? 0 : bannerList.length,
+          controller: _swiperController,
         ),
         constraints: new BoxConstraints.loose(
             new Size(MediaQuery.of(context).size.width, 180.0)));
