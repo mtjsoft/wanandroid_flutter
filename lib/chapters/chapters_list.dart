@@ -37,9 +37,9 @@ class _ChaptersListPageState extends State<ChaptersListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+//      appBar: AppBar(
+//        title: Text(widget.title),
+//      ),
       body: new ListPage(articleList, _renderRow,
           isLoadMore: true,
           isOnRefresh: true,

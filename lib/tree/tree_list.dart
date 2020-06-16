@@ -58,12 +58,17 @@ class _TreeListPageState extends State<TreeListPage>
                 return Tab(text: e.name);
               }).toList()),
         ),
-        body: IndexedStack(
-          index: _currentTabIndex,
-          children: widget.list.map((e) {
-            return new Tree(e.id);
-          }).toList(),
-        ));
+        body: TabBarView(
+            controller: _tabController,
+            children: widget.list.map((e) {
+              return new Tree(e.id);
+            }).toList()));
+//        body: IndexedStack(
+//          index: _currentTabIndex,
+//          children: widget.list.map((e) {
+//            return new Tree(e.id);
+//          }).toList(),
+//        ));
   }
 
   @override
@@ -112,11 +117,11 @@ class TreeState extends State<Tree> {
 
   Widget _renderRow(BuildContext context, int index) {
     return ListItem.init().renderRow(context, index, articleList, 0,
-            (data, position) {
-          setState(() {
-            articleList[position] = data;
-          });
-        });
+        (data, position) {
+      setState(() {
+        articleList[position] = data;
+      });
+    });
   }
 
   // 下拉刷新

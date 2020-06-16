@@ -37,7 +37,7 @@ dependencies:
   sprintf: ^4.0.2
   # webView
   webview_flutter: ^0.3.21
-  #
+  # 数据持久化
   shared_preferences: ^0.5.7+2
 
 dev_dependencies:
