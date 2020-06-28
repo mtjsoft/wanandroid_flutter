@@ -71,7 +71,7 @@ class _MinePageState extends State<MinePage> {
                           padding: EdgeInsets.only(top: 10),
                           child: Text(
                             _userInfoEntity != null
-                                ? "${_userInfoEntity.nickname}  LV${_userInfoEntity.level}"
+                                ? "${_userInfoEntity.nickname}  LV${_userInfoEntity.level != null ? _userInfoEntity.level : 0}"
                                 : "未登录",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -81,14 +81,14 @@ class _MinePageState extends State<MinePage> {
                       Padding(
                         padding: EdgeInsets.only(top: 10),
                         child: Text(
-                          "积分：${_userInfoEntity != null ? _userInfoEntity.coinCount : 0}",
+                          "积分：${_userInfoEntity != null && _userInfoEntity.coinCount != null ? _userInfoEntity.coinCount : 0}",
                           style: TextStyle(color: Colors.white, fontSize: 14),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 10),
                         child: Text(
-                          "排名：${_userInfoEntity != null ? _userInfoEntity.rank : 0}",
+                          "排名：${_userInfoEntity != null && _userInfoEntity.rank != null ? _userInfoEntity.rank : 0}",
                           style: TextStyle(color: Colors.white, fontSize: 14),
                         ),
                       ),
