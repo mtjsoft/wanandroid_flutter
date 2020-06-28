@@ -5,6 +5,9 @@ class RoutersNameConfig {
   // 搜索结果
   static String search_result = "search_result";
 
+  // 微信公众号
+  static String chapter = "chapter";
+
   // 某个微信公众号列表
   static String chapter_list = "chapter_list";
 

@@ -76,15 +76,22 @@ class ListItem {
                             radius: 10,
                             child: Text(
                               articleList[index].shareUser == null ||
-                                  articleList[index].shareUser.isEmpty
-                                  ? articleList[index].author.toUpperCase().substring(0,1)
-                                  : articleList[index].shareUser.toUpperCase().substring(0,1),
-                              style: TextStyle(color: Colors.white,fontSize: 12),
+                                      articleList[index].shareUser.isEmpty
+                                  ? articleList[index]
+                                      .author
+                                      .toUpperCase()
+                                      .substring(0, 1)
+                                  : articleList[index]
+                                      .shareUser
+                                      .toUpperCase()
+                                      .substring(0, 1),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 12),
                             ),
                           ),
                           Text(
                               articleList[index].shareUser == null ||
-                                  articleList[index].shareUser.isEmpty
+                                      articleList[index].shareUser.isEmpty
                                   ? articleList[index].author.substring(1)
                                   : articleList[index].shareUser.substring(1),
                               style: TextStyle(color: Colors.orange)),
@@ -126,11 +133,11 @@ class ListItem {
                                 onTap: () {
                                   if (articleList[index].collect) {
                                     // 已收藏，就取消收藏
-                                    cancleCollect(stateFunction, articleList,
+                                    cancleCollect(context,stateFunction, articleList,
                                         index, type);
                                   } else {
                                     // 未收藏，添加收藏
-                                    addCollect(
+                                    addCollect(context,
                                         stateFunction, articleList, index);
                                   }
                                 },
@@ -190,9 +197,15 @@ class ListItem {
                       child: Text(
                         articleList[index].shareUser == null ||
                                 articleList[index].shareUser.isEmpty
-                            ? articleList[index].author.toUpperCase().substring(0,1)
-                            : articleList[index].shareUser.toUpperCase().substring(0,1),
-                        style: TextStyle(color: Colors.white,fontSize: 12),
+                            ? articleList[index]
+                                .author
+                                .toUpperCase()
+                                .substring(0, 1)
+                            : articleList[index]
+                                .shareUser
+                                .toUpperCase()
+                                .substring(0, 1),
+                        style: TextStyle(color: Colors.white, fontSize: 12),
                       ),
                     ),
                     Text(
@@ -225,11 +238,12 @@ class ListItem {
                           onTap: () {
                             if (articleList[index].collect) {
                               // 已收藏，就取消收藏
-                              cancleCollect(
-                                  stateFunction, articleList, index, type);
+                              cancleCollect(context, stateFunction, articleList,
+                                  index, type);
                             } else {
                               // 未收藏，添加收藏
-                              addCollect(stateFunction, articleList, index);
+                              addCollect(
+                                  context, stateFunction, articleList, index);
                             }
                           },
                           child: Icon(
@@ -250,7 +264,7 @@ class ListItem {
   }
 
   // 收藏站内文章
-  void addCollect(StateFunction stateFunction,
+  void addCollect(BuildContext context, StateFunction stateFunction,
       List<ArticleListData> articleList, int index) {
     DioManager().request<String>(NWMethod.POST,
         sprintf(ApiUrl.init().addCollect, [articleList[index].id]), params: {},
@@ -262,11 +276,15 @@ class ListItem {
       }
     }, error: (error) {
       FluttertoastUtils.showToast(error.errorMsg);
+      if (error.errorCode == -1001) {
+        //请先登录！
+        Navigator.pushNamed(context, RoutersNameConfig.login_page);
+      }
     });
   }
 
   // 取消收藏  type: 0 站内列表  1： 我的收藏列表
-  void cancleCollect(StateFunction stateFunction,
+  void cancleCollect(BuildContext context, StateFunction stateFunction,
       List<ArticleListData> articleList, int index, int type) {
     String api;
     Map<String, dynamic> params;
@@ -291,6 +309,10 @@ class ListItem {
       }
     }, error: (error) {
       FluttertoastUtils.showToast(error.errorMsg);
+      if (error.errorCode == -1001) {
+        //请先登录！
+        Navigator.pushNamed(context, RoutersNameConfig.login_page);
+      }
     });
   }
 }

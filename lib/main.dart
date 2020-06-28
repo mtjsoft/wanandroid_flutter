@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
     RoutersNameConfig.browser: (context) => Browser(),
     RoutersNameConfig.search_result: (context) =>
         SearchResultPage(ModalRoute.of(context).settings.arguments.toString()),
+    RoutersNameConfig.chapter: (context) => ChaptersPage(),
     RoutersNameConfig.chapter_list: (context) => ChaptersListPage(
         jsonDecode(ModalRoute.of(context).settings.arguments)["title"],
         jsonDecode(ModalRoute.of(context).settings.arguments)["id"]),
@@ -78,7 +79,6 @@ class _MyHomePageState extends State<MyHomePage> {
     HomePage(),
     HotSearchPage(),
     TreeTypePage(),
-    ChaptersPage(),
     MinePage()
   ];
 
@@ -102,10 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('首页')),
           BottomNavigationBarItem(icon: Icon(Icons.search), title: Text('热搜')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.extension), title: Text('体系')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.dashboard), title: Text('公众号')),
+          BottomNavigationBarItem(icon: Icon(Icons.extension), title: Text('体系')),
           BottomNavigationBarItem(icon: Icon(Icons.person), title: Text('我的')),
         ],
       ),

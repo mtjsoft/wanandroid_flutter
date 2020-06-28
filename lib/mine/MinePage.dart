@@ -154,11 +154,7 @@ class _MinePageState extends State<MinePage> {
           GestureDetector(
             onTap: () {
               // 最新项目
-              if (_userInfoEntity == null) {
-                loginPage(context);
-              } else {
-                Navigator.pushNamed(context, RoutersNameConfig.projectListPage);
-              }
+              Navigator.pushNamed(context, RoutersNameConfig.projectListPage);
             },
             child: Container(
               margin: EdgeInsets.only(top: 1),
@@ -173,6 +169,39 @@ class _MinePageState extends State<MinePage> {
                   ),
                   Text(
                     "最新项目",
+                  ),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.grey,
+                        size: 12,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              // 公众号
+              Navigator.pushNamed(context, RoutersNameConfig.chapter);
+            },
+            child: Container(
+              margin: EdgeInsets.only(top: 1),
+              color: Colors.grey[200],
+              padding: EdgeInsets.fromLTRB(16, 10, 16, 10),
+              width: double.infinity,
+              child: Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.dashboard,
+                    size: 18,
+                  ),
+                  Text(
+                    "公众号",
                   ),
                   Expanded(
                     child: Align(
