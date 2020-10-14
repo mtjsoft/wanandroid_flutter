@@ -193,9 +193,7 @@ class _MinePageState extends State<MinePage> {
           GestureDetector(
             onTap: () {
               // 公众号
-              String json = jsonEncode({
-                "list": chaptersList
-              });
+              String json = jsonEncode({"list": chaptersList});
               Navigator.pushNamed(context, RoutersNameConfig.chapter,
                   arguments: json);
             },
