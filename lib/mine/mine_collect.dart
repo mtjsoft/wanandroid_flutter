@@ -34,7 +34,7 @@ class _MineCollectPageState extends State<MineCollectPage> {
       appBar: AppBar(
         title: Text("我的收藏"),
       ),
-      body: new ListPage(articleList, _renderRow,
+      body: ListPage(articleList, _renderRow,
           isLoadMore: true,
           isOnRefresh: true,
           noMoreData: articleList.length >= total,

@@ -1,13 +1,14 @@
 import 'package:firstflutterapp/chapters/chapters_list.dart';
-import 'package:firstflutterapp/config/ApiUrl.dart';
-import 'package:firstflutterapp/config/GlobalConfig.dart';
-import 'package:firstflutterapp/diohttp/DioManager.dart';
-import 'package:firstflutterapp/diohttp/NWMethod.dart';
 import 'package:firstflutterapp/entity/chapters_entity.dart';
-import 'package:firstflutterapp/utils/FluttertoastUtils.dart';
 import 'package:flutter/material.dart';
 
 class ChaptersPage extends StatefulWidget {
+
+  // 公众号列表
+  List<ChaptersEntity> list;
+
+  ChaptersPage({Key key, this.list}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -15,49 +16,54 @@ class ChaptersPage extends StatefulWidget {
   }
 }
 
-class _ChaptersPageState extends State<ChaptersPage> {
-  // 公众号列表
-  List<ChaptersEntity> _list = new List();
+class _ChaptersPageState extends State<ChaptersPage> with SingleTickerProviderStateMixin{
+
+  TabController _tabController; //需要定义一个Controller
+
+  int _currentTabIndex = 0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getChaptersList();
+//    getChaptersList();
+    _tabController = TabController(
+        length: widget.list.length,
+        vsync: this,
+        initialIndex: _currentTabIndex);
+    _tabController.addListener(() {
+      setState(() {
+        _currentTabIndex = _tabController.index;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     //获取路由参数
-    return DefaultTabController(
-        length: _list.length,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text('公众号'),
-            bottom: TabBar(
-                isScrollable: true,
-                tabs: _list.map((e) {
-                  return Tab(text: e.name);
-                }).toList()),
-          ),
-          body: TabBarView(
-            children: _list.map((e) {
-              return new ChaptersListPage(e.name, e.id);
-            }).toList(),
-          ),
-        ));
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('公众号'),
+        bottom: TabBar(
+            controller: _tabController,
+            isScrollable: true,
+            tabs: widget.list.map((e) {
+              return Tab(text: e.name);
+            }).toList()),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: widget.list.map((e) {
+          return ChaptersListPage(e.name, e.id);
+        }).toList(),
+      ),
+    );
   }
 
-  // 获取公众号列表
-  void getChaptersList() {
-    DioManager().requestList<ChaptersEntity>(
-        NWMethod.GET, ApiUrl.init().chaptersList,
-        params: {}, success: (data) {
-      setState(() {
-        _list = data;
-      });
-    }, error: (error) {
-      FluttertoastUtils.showToast(error.errorMsg);
-    });
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _tabController.dispose();
+    super.dispose();
   }
 }

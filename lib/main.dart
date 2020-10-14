@@ -6,6 +6,7 @@ import 'package:firstflutterapp/chapters/chapters_list.dart';
 import 'package:firstflutterapp/chapters/wxarticle_chapters.dart';
 import 'package:firstflutterapp/config/GlobalConfig.dart';
 import 'package:firstflutterapp/config/routes_name_config.dart';
+import 'package:firstflutterapp/entity/chapters_entity.dart';
 import 'package:firstflutterapp/entity/tree_type_entity.dart';
 import 'package:firstflutterapp/generated/json/base/json_convert_content.dart';
 import 'package:firstflutterapp/home/HomePage.dart';
@@ -30,10 +31,8 @@ class MyApp extends StatelessWidget {
     RoutersNameConfig.browser: (context) => Browser(),
     RoutersNameConfig.search_result: (context) =>
         SearchResultPage(ModalRoute.of(context).settings.arguments.toString()),
-    RoutersNameConfig.chapter: (context) => ChaptersPage(),
-    RoutersNameConfig.chapter_list: (context) => ChaptersListPage(
-        jsonDecode(ModalRoute.of(context).settings.arguments)["title"],
-        jsonDecode(ModalRoute.of(context).settings.arguments)["id"]),
+    RoutersNameConfig.chapter: (context) => ChaptersPage(list: JsonConvert.fromJsonAsT<List<ChaptersEntity>>(
+        jsonDecode(ModalRoute.of(context).settings.arguments)["list"])),
     RoutersNameConfig.unknown_page: (context) => UnknownPage(),
     RoutersNameConfig.login_page: (context) => Login(),
     RoutersNameConfig.treeListPage: (context) => TreeListPage(

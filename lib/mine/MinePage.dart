@@ -1,9 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:convert';
+
 import 'package:firstflutterapp/config/ApiUrl.dart';
 import 'package:firstflutterapp/config/GlobalConfig.dart';
 import 'package:firstflutterapp/config/routes_name_config.dart';
 import 'package:firstflutterapp/diohttp/DioManager.dart';
 import 'package:firstflutterapp/diohttp/NWMethod.dart';
+import 'package:firstflutterapp/entity/chapters_entity.dart';
 import 'package:firstflutterapp/entity/user_info_entity.dart';
 import 'package:firstflutterapp/utils/FluttertoastUtils.dart';
 import 'package:firstflutterapp/utils/shared_preferences.dart';
@@ -20,6 +22,9 @@ class MinePage extends StatefulWidget {
 class _MinePageState extends State<MinePage> {
   UserInfoEntity _userInfoEntity;
 
+  // 公众号列表
+  List<ChaptersEntity> chaptersList = new List();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -35,6 +40,7 @@ class _MinePageState extends State<MinePage> {
         _userInfoEntity = null;
       });
     });
+    getChaptersList();
   }
 
   @override
@@ -187,7 +193,11 @@ class _MinePageState extends State<MinePage> {
           GestureDetector(
             onTap: () {
               // 公众号
-              Navigator.pushNamed(context, RoutersNameConfig.chapter);
+              String json = jsonEncode({
+                "list": chaptersList
+              });
+              Navigator.pushNamed(context, RoutersNameConfig.chapter,
+                  arguments: json);
             },
             child: Container(
               margin: EdgeInsets.only(top: 1),
@@ -271,6 +281,19 @@ class _MinePageState extends State<MinePage> {
       newUserInfo.coinCount = data.coinCount;
       setState(() {
         _userInfoEntity = newUserInfo;
+      });
+    }, error: (error) {
+      FluttertoastUtils.showToast(error.errorMsg);
+    });
+  }
+
+  // 获取公众号列表
+  void getChaptersList() {
+    DioManager().requestList<ChaptersEntity>(
+        NWMethod.GET, ApiUrl.init().chaptersList,
+        params: {}, success: (data) {
+      setState(() {
+        chaptersList = data;
       });
     }, error: (error) {
       FluttertoastUtils.showToast(error.errorMsg);

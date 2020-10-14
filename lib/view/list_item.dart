@@ -77,10 +77,15 @@ class ListItem {
                             child: Text(
                               articleList[index].shareUser == null ||
                                       articleList[index].shareUser.isEmpty
-                                  ? articleList[index]
-                                      .author
-                                      .toUpperCase()
-                                      .substring(0, 1)
+                                  ? articleList[index].author.isNotEmpty
+                                      ? articleList[index]
+                                          .author
+                                          .toUpperCase()
+                                          .substring(0, 1)
+                                      : articleList[index]
+                                          .userId
+                                          .toString()
+                                          .substring(0, 1)
                                   : articleList[index]
                                       .shareUser
                                       .toUpperCase()
@@ -92,7 +97,9 @@ class ListItem {
                           Text(
                               articleList[index].shareUser == null ||
                                       articleList[index].shareUser.isEmpty
-                                  ? articleList[index].author.substring(1)
+                                  ? articleList[index].author.isNotEmpty && articleList[index].author.length > 1
+                                      ? articleList[index].author.substring(1)
+                                      : ""
                                   : articleList[index].shareUser.substring(1),
                               style: TextStyle(color: Colors.orange)),
                           Expanded(
@@ -133,12 +140,12 @@ class ListItem {
                                 onTap: () {
                                   if (articleList[index].collect) {
                                     // 已收藏，就取消收藏
-                                    cancleCollect(context,stateFunction, articleList,
-                                        index, type);
+                                    cancleCollect(context, stateFunction,
+                                        articleList, index, type);
                                   } else {
                                     // 未收藏，添加收藏
-                                    addCollect(context,
-                                        stateFunction, articleList, index);
+                                    addCollect(context, stateFunction,
+                                        articleList, index);
                                   }
                                 },
                                 child: Icon(
@@ -197,10 +204,15 @@ class ListItem {
                       child: Text(
                         articleList[index].shareUser == null ||
                                 articleList[index].shareUser.isEmpty
-                            ? articleList[index]
-                                .author
-                                .toUpperCase()
-                                .substring(0, 1)
+                            ? articleList[index].author.isNotEmpty
+                                ? articleList[index]
+                                    .author
+                                    .toUpperCase()
+                                    .substring(0, 1)
+                                : articleList[index]
+                                    .userId
+                                    .toString()
+                                    .substring(0, 1)
                             : articleList[index]
                                 .shareUser
                                 .toUpperCase()
@@ -211,7 +223,9 @@ class ListItem {
                     Text(
                         articleList[index].shareUser == null ||
                                 articleList[index].shareUser.isEmpty
-                            ? articleList[index].author.substring(1)
+                            ? articleList[index].author.isNotEmpty && articleList[index].author.length > 1
+                                ? articleList[index].author.substring(1)
+                                : ""
                             : articleList[index].shareUser.substring(1),
                         style: TextStyle(color: Colors.orange)),
                     Expanded(

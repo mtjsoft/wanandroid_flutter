@@ -13,7 +13,7 @@ class ChaptersListPage extends StatefulWidget {
   int id = 408;
   String title = "鸿洋";
 
-  ChaptersListPage(String this.title, int this.id);
+  ChaptersListPage(this.title, this.id);
 
   @override
   State<StatefulWidget> createState() {
@@ -36,17 +36,12 @@ class _ChaptersListPageState extends State<ChaptersListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-//      appBar: AppBar(
-//        title: Text(widget.title),
-//      ),
-      body: new ListPage(articleList, _renderRow,
-          isLoadMore: true,
-          isOnRefresh: true,
-          noMoreData: articleList.length >= total,
-          loadMoreFunction: getList,
-          onRefreshFunction: _onRefresh),
-    );
+    return ListPage(articleList, _renderRow,
+        isLoadMore: true,
+        isOnRefresh: true,
+        noMoreData: articleList.length >= total,
+        loadMoreFunction: getList,
+        onRefreshFunction: _onRefresh);
   }
 
   Widget _renderRow(BuildContext context, int index) {
